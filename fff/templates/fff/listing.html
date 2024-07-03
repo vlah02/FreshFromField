@@ -1,0 +1,250 @@
+<!--Djordje Loncar 2021/0076-->
+{% extends 'main.html' %}
+{% load image_tags %}
+
+{% block title %}
+    {{ listing.listingname }}
+{% endblock title %}
+
+{% block content %}
+
+    <script>
+        function go_to_chat(user2) {
+            $.ajax({
+                url: '/get_chat/',
+                type: 'POST',
+                data: {
+                    'user2': user2,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    location.href = `/chat/${response.chat_id}/`;
+                }
+            });
+        }
+
+    </script>
+
+    <div class="container" style="margin-top: 2%; margin-bottom: 5%; color: #0C312E">
+        <div class="row listing-row">
+            <div class="col-4 listing-img">
+                <img src="data:image/jpeg;base64,{{ listing.image|to_base64 }}" alt="{{ listing.listingname }}"
+                     style="width: 100%; height: auto; max-height: 300px; max-width: 300px">
+            </div>
+            <div class="col-4">
+                <h3>Oglas:</h3>
+                <h5>Grad: {{ listing.userid.userid.city }}</h5>
+                {% with formatted_date=listing.date_added|date:"d.m.Y" %}
+                    <h5>Oglas postavljen: {{ formatted_date }}</h5>
+                {% endwith %}
+                <h5>Cena: {{ listing.price }} {{ listing.unit }}</h5>
+                {% if listing.listingid in user_favorite_listings %}
+                    <button id="favoritadd" class="btn farm-light-colour listing-btn btn-lg"
+                            style="width: 55%; margin-left: 0;"
+                            onclick="toggleFavorite('{{ listing.listingid }}')">Ukloni iz Favorita
+                    </button>
+                {% else %}
+                    <button id="favoritout" class="btn farm-light-colour listing-btn btn-lg"
+                            style="width: 55%; margin-left: 0"
+                            onclick="toggleFavorite('{{ listing.listingid }}')">Dodaj u Favorite
+                    </button>
+                {% endif %}
+            </div>
+            <div class="col-4">
+                {% if user.userid != listing.userid.userid.userid %}
+                    <h3>Prodavac:</h3>
+                    <h5>Korisnicko ime: {{ listing.userid.userid.username }}</h5>
+                    <h5>Ime i Prezime: {{ listing.userid.userid.first_name }} {{ listing.userid.userid.last_name }}</h5>
+                    <h5>Kontakt telefon: {{ listing.userid.userid.phone }}</h5>
+                    <button id="message_btn" class="btn farm-light-colour listing-btn btn-lg"
+                            style="width: 55%; margin-left: 0"
+                            onclick="go_to_chat('{{ listing.userid.userid.userid }}')">Pošalji Poruku
+                    </button>
+                {% else %}
+                    <div class="d-block mb-2">
+                        <a href="{% url 'edit_listing' listing.listingid %}">
+                            <button id="izmenaOglasa" style="width: 55%; margin-left: 0; margin-top: 5px"
+                                    class="btn farm-light-colour listing-btn btn-lg">Izmeni oglas
+                            </button>
+                        </a>
+                    </div>
+                    <div class="d-block mb-2">
+                        <button id="obrisi" style="width: 55%; margin-left: 0; margin-top: 5px"
+                                class="btn farm-light-colour listing-btn btn-lg">
+                            Obriši oglas
+                        </button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row listing-row">
+            <div class="col-12">
+                <h1>{{ listing.listingname }}</h1>
+                <p>{{ listing.description }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="close">&times;</div>
+            <br>
+            <p>Da li ste sigurni da želite da obrišete oglas?</p>
+            <div class="button-container">
+                <button id="confirmDelete">Da</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button id="cancelDelete">Ne</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .overlay {
+            position: fixed;
+            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        }
+
+        .modal {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #67984B;
+            width: 250px;
+            height: 180px;
+            border-radius: 10px;
+        }
+
+        .modal-content {
+            background-color: #67984B;
+            margin: 0;
+            padding: 20px;
+            border: 3px solid whitesmoke;
+            width: 100%;
+            height: 100%;
+            color: whitesmoke;
+            font-size: 18px;
+        }
+
+        /* Close button */
+        .close {
+            position: absolute;
+            top: 1px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        function toggleFavorite(listingId) {
+            // Send an AJAX request to add/remove the listing from favorites
+            $.ajax({
+                url: '/favorites/',
+                type: 'POST',
+                data: {
+                    'listing_id': listingId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    // Osveži stranicu nakon uspešnog dodavanja/uklanjanja iz omiljenih
+                    location.reload();
+                }
+            });
+        }
+
+        // Get the modal
+        var modal = document.getElementById("confirmationModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("obrisi");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // When the user clicks on "Ne" (cancel), close the modal
+        document.getElementById("cancelDelete").onclick = function () {
+            modal.style.display = "none";
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // When the user clicks on "Da" (confirm), perform deletion action
+        document.getElementById("confirmDelete").onclick = function () {
+            var listingId = "{{ listing.listingid }}"; // Get the ID of the listing to be deleted
+            var csrftoken = getCookie('csrftoken'); // Get the CSRF token
+
+            // AJAX request to delete the listing
+            $.ajax({
+                url: `/delete_listing/${listingId}/`, // Use the correct URL endpoint
+                type: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                success: function (response) {
+                    console.log("Listing deleted");
+                    // Optionally, you can redirect the user or perform any other action after successful deletion
+                    window.location.href = '/listings/';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Failed to delete listing");
+                    // Display an error message to the user
+                    alert("Failed to delete listing. Please try again later.");
+                }
+            });
+
+            // Close the modal
+            modal.style.display = "none";
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Function to get CSRF token from cookie
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+
+{% endblock content %}

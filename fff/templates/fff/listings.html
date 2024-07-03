@@ -1,0 +1,73 @@
+<!--Djordje Loncar 2021/0076-->
+{% extends 'main.html' %}
+{% load widget_tweaks %}
+{% load image_tags %}
+
+{% block title %}
+    {% if request.session.category == "Voće" %}
+        Svi oglasi voća
+    {% elif request.session.category == "Povrće" %}
+        Svi oglasi povrća
+    {% elif request.session.category == "Meso" %}
+        Svi oglasi mesa
+    {% elif request.session.category == "Mlečni proizvodi" %}
+        Svi oglasi mlečnih proizvoda
+    {% elif request.session.category == "Sirovina" %}
+        Svi oglasi sirovina
+    {% elif request.session.category == "Ostalo" %}
+        Svi oglasi tipa Ostalo
+    {% else %}
+        Svi moji oglasi
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    <div class="container-fluid text-center" style="margin-top: 2%">
+        {% if request.session.category == "Voće" %}
+            <h1>Svi oglasi voća</h1>
+        {% elif request.session.category == "Povrće" %}
+            <h1>Svi oglasi povrća</h1>
+        {% elif request.session.category == "Meso" %}
+            <h1>Svi oglasi mesa</h1>
+        {% elif request.session.category == "Mlečni proizvodi" %}
+            <h1>Svi oglasi mlečnih proizvoda</h1>
+        {% elif request.session.category == "Sirovina" %}
+            <h1>Svi oglasi sirovina</h1>
+        {% elif request.session.category == "Ostalo" %}
+            <h1>Svi oglasi tipa Ostalo</h1>
+        {% else %}
+            <h1>Svi moji oglasi</h1>
+        {% endif %}
+        {% for listing in listings %}
+            <div class="row listings-row" style="padding-top: 20px">
+                <div class="col-3"></div>
+
+                <div class="col-1 listings-img" style="display: flex; align-items: center; justify-content: center">
+                    <a href="{% url 'listing' listing.pk %}">
+                        <img src="data:image/jpeg;base64,{{ listing.image|to_base64 }}" alt="{{ listing.listingname }}"
+                             style="width: 100%; height: auto;">
+                    </a>
+                </div>
+
+                <div class="col-3 d-flex align-items-center text-start listings-description">
+                    <div><a href="{% url 'listing' listing.pk %}">
+                        <h3>{{ listing.listingname }}</h3>
+                        <p>{{ listing.description|truncatechars:50 }}</p>
+                    </a></div>
+                </div>
+                <div class="col-2 d-flex align-items-center listings-price">
+                    <a href="{% url 'listing' listing.pk %}">
+                        <h3>{{ listing.price }}{{ listing.unit }}</h3>
+                    </a>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="row listings-row" style="padding-top: 20px">
+            <div class="col-12">
+                <p>Trenutno nema dostupnih oglasa</p>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

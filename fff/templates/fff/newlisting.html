@@ -1,0 +1,94 @@
+<!--Djordje Loncar 2021/0076-->
+{% extends 'main.html' %}
+
+{% block title %}
+    Novi oglas
+{% endblock title %}
+
+{% block content %}
+    <style>
+        td {
+            text-align: right;
+            vertical-align: middle;
+            width: 100%;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+        input {
+            width: 250px;
+        }
+        .inside {
+            border-radius: 5px;
+            resize: none;
+            width: 300px;
+            margin: 5px;
+            max-height: 100px;
+        }
+    </style>
+    <div class="container d-flex flex-column align-items-center" style="margin-top: 3%">
+        <div class="login-wrapper">
+            <h3>Novi oglas</h3>
+        </div>
+        <div class="row">
+            <form method="post" enctype="multipart/form-data" class="mx-auto d-block">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>Naziv oglasa:</td>
+                        <td><input class = "inside" id="naziv" name="listingname" type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Tip proizvoda:</td>
+                        <td>
+                            <select class = "inside" name="type" id="tip" required>
+                                <option>Voće</option>
+                                <option>Povrće</option>
+                                <option>Meso</option>
+                                <option>Mlečni proizvodi</option>
+                                <option>Sirovina</option>
+                                <option selected>Ostalo</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cena:</td>
+                        <td><label for="cena"></label><input class = "inside" id="cena" name="price" type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Jedinica mere:</td>
+                        <td>
+                            <select class = "inside" name="unit" id="jedinica" required>
+                                <option selected>din/komad</option>
+                                <option>din/kg</option>
+                                <option>din/g</option>
+                                <option>din/ml</option>
+                                <option>din/l</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kolicina:</td>
+                        <td><input class = "inside" id="kolicina" name="quantity" type="text" required></td>
+                    </tr>
+                    <tr>
+                        <td>Opis oglasa:</td>
+                        <td><textarea class = "inside" id="opis" name="description" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Slika:</td>
+                        <td><input id="slika" name="image" type="file"></td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                            <button type="reset" class="btn farm-dark-colour listing-btn btn-lg" id="odustani">Odustani</button>
+                        </td>
+                        <td class="d-flex content">
+                            <button class="btn farm-dark-colour listing-btn btn-lg" type="submit" id="postavi">Postavi</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

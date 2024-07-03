@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    User profile
+{% endblock title %}
+
+{% block content %}
+    <div class="container" style="margin-top: 2%">
+        <div class="row login-wrapper" style="margin-top: 0px">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <form method="post" action="{% url 'rate' user.userid %}" >
+                    {% csrf_token %}
+                    <p id="oceni"></p>
+                    <input name="rating" id="rating" class="form-range" type="range" min="1" max="5" value="1">
+                    <button class="farm-light-colour btn btn-lg" style="margin-left: 35%">Oceni</button>
+                </form>
+            </div>
+        </div>
+        <div class="row login-wrapper" style="height: 80px">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <label>Korisnicko ime</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ user.username }} </output>
+            </div>
+            <div class="col-4">
+                <label>Ocena</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ rating }} </output>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row login-wrapper" style="margin-top: 30px">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <label>Ime</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ user.first_name }} </output>
+            </div>
+            <div class="col-4">
+                <label>Prezime</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly> {{ user.last_name }}</output>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row login-wrapper">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <label>Email</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ user.email }}</output>
+            </div>
+            <div class="col-4">
+                <label>Broj Telefona</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ user.phone }} </output>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row login-wrapper">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <label>Drzava</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ user.country }}</output>
+            </div>
+            <div class="col-4">
+                <label>Grad</label>
+                <output name="first_name" class="farm-dark-colour login-form mr-sm-2" type="text"
+                        readonly>{{ user.city }}</output>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+    <script>
+        // Get the slider and the output element
+        var slider = document.getElementById("rating");
+        var output = document.getElementById("oceni");
+
+        // Update the output element with the slider's initial value
+        output.textContent = "Tvoja ocena: " + slider.value;
+
+        // Add an event listener to the slider
+        slider.oninput = function () {
+            // Update the output element whenever the slider's value changes
+            output.textContent = "Tvoja ocena: " + slider.value;
+        }
+    </script>
+{% endblock content %}

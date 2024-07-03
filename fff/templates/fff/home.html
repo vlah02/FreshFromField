@@ -1,0 +1,188 @@
+<!--Marko Vlahovic 2021/0570-->
+{% extends 'main.html' %}
+
+{% block title %}
+Fresh From Fields
+{% endblock title %}
+
+{% block content %}
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    .content-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 180px);
+        width: 100%;
+    }
+    .circle {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #67984B;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .circle-link:hover .circle {
+        transform: scale(1.1);
+        background-color: #4E7235;
+    }
+    .circle img {
+        position: absolute;
+        width: 65px;
+        height: 65px;
+    }
+    .circle img:nth-child(1) {
+        top: 40px;
+        left: 25px;
+    }
+    .circle img:nth-child(2) {
+        bottom: 30px;
+    }
+    .circle img:nth-child(3) {
+        top: 40px;
+        right: 25px;
+    }
+    .category-text {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    @media (max-width: 1200px) {
+        .circle {
+            width: 180px;
+            height: 180px;
+        }
+        .circle img {
+            width: 55px;
+            height: 55px;
+        }
+        .category-text {
+            font-size: 28px;
+        }
+    }
+    @media (max-width: 992px) {
+        .circle {
+            width: 160px;
+            height: 160px;
+        }
+        .circle img {
+            width: 50px;
+            height: 50px;
+        }
+        .circle img:nth-child(1) {
+            top: 35px;
+            left: 20px;
+        }
+        .circle img:nth-child(2) {
+            bottom: 20px;
+        }
+        .circle img:nth-child(3) {
+            top: 35px;
+            right: 20px;
+        }
+        .category-text {
+            font-size: 24px;
+        }
+    }
+    @media (max-width: 768px) {
+        .circle {
+            width: 140px;
+            height: 140px;
+        }
+        .circle img {
+            width: 45px;
+            height: 45px;
+        }
+        .circle img:nth-child(1) {
+            top: 30px;
+            left: 15px;
+        }
+        .circle img:nth-child(2) {
+            bottom: 20px;
+        }
+        .circle img:nth-child(3) {
+            top: 30px;
+            right: 15px;
+        }
+        .category-text {
+            font-size: 20px;
+        }
+        .col-6 {
+            margin-bottom: 10px; /* Adjust this value to move circles up */
+        }
+    }
+</style>
+
+<div class="container-fluid content-container">
+    <div class="row">
+        <div class="col-6 col-md-4 d-flex flex-column align-items-center text-center mb-3">
+            <a href="{% url 'listings' %}?category=Voće" class="d-flex justify-content-center circle-link">
+                <div class="circle">
+                    <img src="/static/images/ikonice/voce/jabuka.png" alt="Voće 1">
+                    <img src="/static/images/ikonice/voce/grozdje.png" alt="Voće 2">
+                    <img src="/static/images/ikonice/voce/pomorandza.png" alt="Voće 3">
+                </div>
+            </a>
+            <p class="mt-1 category-text">Voće</p>
+        </div>
+        <div class="col-6 col-md-4 d-flex flex-column align-items-center text-center mb-3">
+            <a href="{% url 'listings' %}?category=Povrće" class="d-flex justify-content-center circle-link">
+                <div class="circle">
+                    <img src="/static/images/ikonice/povrce/kupus.png" alt="Povrće 1">
+                    <img src="/static/images/ikonice/povrce/paradajz.png" alt="Povrće 2">
+                    <img src="/static/images/ikonice/povrce/sargarepa.png" alt="Povrće 3">
+                </div>
+            </a>
+            <p class="mt-1 category-text">Povrće</p>
+        </div>
+        <div class="col-6 col-md-4 d-flex flex-column align-items-center text-center mb-3">
+            <a href="{% url 'listings' %}?category=Meso" class="d-flex justify-content-center circle-link">
+                <div class="circle">
+                    <img src="/static/images/ikonice/meso/govedina.png" alt="Meso 1">
+                    <img src="/static/images/ikonice/meso/piletina.png" alt="Meso 2">
+                    <img src="/static/images/ikonice/meso/svinjetina.png" alt="Meso 3">
+                </div>
+            </a>
+            <p class="mt-1 category-text">Meso</p>
+        </div>
+        <div class="col-6 col-md-4 d-flex flex-column align-items-center text-center mb-3">
+            <a href="{% url 'listings' %}?category=Mlečni proizvodi" class="d-flex justify-content-center circle-link">
+                <div class="circle">
+                    <img src="/static/images/ikonice/mlecni_proizvodi/jogurt.png" alt="Mlečni proizvodi 1">
+                    <img src="/static/images/ikonice/mlecni_proizvodi/mleko.png" alt="Mlečni proizvodi 2">
+                    <img src="/static/images/ikonice/mlecni_proizvodi/sir.png" alt="Mlečni proizvodi 3">
+                </div>
+            </a>
+            <p class="mt-1 category-text">Mlečni proizvodi</p>
+        </div>
+        <div class="col-6 col-md-4 d-flex flex-column align-items-center text-center mb-3">
+            <a href="{% url 'listings' %}?category=Sirovina" class="d-flex justify-content-center circle-link">
+                <div class="circle">
+                    <img src="/static/images/ikonice/sirovina/jaja.png" alt="Sirovina 1">
+                    <img src="/static/images/ikonice/sirovina/kukuruz.png" alt="Sirovina 2">
+                    <img src="/static/images/ikonice/sirovina/psenica.png" alt="Sirovina 3">
+                </div>
+            </a>
+            <p class="mt-1 category-text">Sirovine</p>
+        </div>
+        <div class="col-6 col-md-4 d-flex flex-column align-items-center text-center mb-3">
+            <a href="{% url 'listings' %}?category=Ostalo" class="d-flex justify-content-center circle-link">
+                <div class="circle">
+                    <img src="/static/images/ikonice/ostalo/dzem.png" alt="Ostalo 1">
+                    <img src="/static/images/ikonice/ostalo/kikiriki.png" alt="Ostalo 2">
+                    <img src="/static/images/ikonice/ostalo/med.png" alt="Ostalo 3">
+                </div>
+            </a>
+            <p class="mt-1 category-text">Ostalo</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

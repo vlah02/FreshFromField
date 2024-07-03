@@ -1,0 +1,235 @@
+body {
+    font-family: 'Jua', serif;
+    background-color: #e6dbb9
+}
+
+.farm-light-colour {
+    background-color: #67984B;
+    color: whitesmoke;
+}
+
+@font-face {
+    font-family: 'Jua';
+    src: url('../fonts/granstander-clean-regular.ttf') format('truetype');
+}
+
+.farm-dark-colour {
+    background-color: #0C312E;
+    color: white;
+    font-family: "Jua", serif;
+}
+
+.search {
+    border-radius: 5px 0 0 5px;
+    border: 0;
+    outline: none;
+    font-size: x-large;
+    width: 100%;
+}
+
+.logo-img {
+    padding-top: 0;
+    padding-bottom: 10px;
+    padding-left: 50px;
+}
+
+.search-button {
+    height: 38px;
+    width: 38px;
+    border-radius: 0 5px 5px 0;
+    border-left: 2px solid #67984B;
+}
+
+.search-button:hover {
+    border: 3px solid black;
+}
+
+.my-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.circle {
+    border-radius: 50%;
+    background-color: #67984B;
+    height: 180px;
+    width: 180px;
+}
+
+.circle p {
+    padding-top: 120px;
+    color: whitesmoke;
+}
+
+.circle:hover p {
+    color: #0C312E;
+}
+
+.circle img {
+    height: 30%;
+    padding-bottom: 0;
+
+}
+
+.listings-img img {
+    height: 100%;
+    width: 100%;
+}
+
+.listings-img {
+    border-radius: 5px 0 0 5px;
+    border-top: solid #0C312E 3px;
+    border-left: solid #0C312E 3px;
+    border-bottom: solid #0C312E 3px;
+    margin-left: 1%;
+    background-color: #67984B;
+    color: whitesmoke;
+}
+
+.listings-description {
+    border-top: solid #0C312E 3px;
+    border-bottom: solid #0C312E 3px;
+    border-left: solid #0C312E 1px;
+    background-color: #67984B;
+    color: whitesmoke;
+}
+
+.listings-price {
+    border-radius: 0 5px 5px 0;
+    border-top: solid #0C312E 3px;
+    border-right: solid #0C312E 3px;
+    border-bottom: solid #0C312E 3px;
+    border-left: solid #0C312E 1px;
+    margin-right: 1%;
+    background-color: #67984B;
+    color: whitesmoke;
+}
+
+.listing-img img {
+    padding: 5%;
+    height: 300px;
+    border-radius: 5px;
+    border: solid #0C312E 3px;
+}
+
+.listing-btn {
+    margin: 2%;
+}
+
+.listing-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.login-form {
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    font-size: large;
+    padding: 3%;
+    height: 50px;
+    width: 100%;
+}
+
+.login-wrapper {
+    margin-bottom: 1%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0C312E;
+    text-decoration: #0C312E;
+}
+
+.chats-img {
+    border-radius: 5px 0 0 5px;
+    border-top: solid #0C312E 3px;
+    border-left: solid #0C312E 3px;
+    border-bottom: solid #0C312E 3px;
+    margin-left: 1%;
+    background-color: #67984B;
+    color: whitesmoke;
+}
+
+.chats-img img {
+    height: 100%;
+    width: 100%;
+}
+
+.chats-description {
+    border-radius: 0 5px 5px 0;
+    border-top: solid #0C312E 3px;
+    border-bottom: solid #0C312E 3px;
+    border-left: solid #0C312E 1px;
+    border-right: solid #0C312E 3px;
+    background-color: #67984B;
+    color: whitesmoke;
+}
+
+.customer-support {
+    background-color: #a52834;
+}
+
+.chat-container {
+    border-radius: 10px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    padding: 2%;
+    border: solid #0C312E 4px;
+    height: 100%;
+}
+
+.chat img {
+    height: 100%;
+    width: 100%;
+}
+
+.chat-messages {
+    height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.message {
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #67984B;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.user {
+    font-weight: bold;
+}
+
+.message-form {
+    display: flex;
+}
+
+.message-form input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border-right: 1px solid #ddd;
+    margin-left: 1%;
+}
+
+.type-message {
+    border-radius: 5px 0 0 5px;
+    border: 0;
+    outline: none;
+    font-size: medium;
+}
+
+.message-form button {
+    width: 20%;
+    margin-left: 2%;
+}
+
+.chat-header img {
+    width: 100%;
+}

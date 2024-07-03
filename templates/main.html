@@ -1,0 +1,225 @@
+<!--Marko Vlahovic 2021/0570-->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}FreshFromFields{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static '../static/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '../static/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            const csrftoken = getCookie('csrftoken');
+
+            $("#logoutButton").click(function () {
+                $.ajax({
+                    url: "{% url 'user_logout' %}",
+                    type: "POST",
+                    data: {},
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    success: function (response) {
+                        // Redirect to the desired page after logout
+                        window.location.href = "{% url 'home' %}";
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // Handle error response if needed
+                        console.log("Error logging out:", errmsg);
+                    }
+                });
+            });
+            $("#logoutButton1").click(function () {
+                $.ajax({
+                    url: "{% url 'user_logout' %}",
+                    type: "POST",
+                    data: {},
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    success: function (response) {
+                        // Redirect to the desired page after logout
+                        window.location.href = "{% url 'home' %}";
+                    },
+                    error: function (xhr, errmsg, err) {
+                        // Handle error response if needed
+                        console.log("Error logging out:", errmsg);
+                    }
+                });
+            });
+            $("#addListing").click(function() {
+                window.location.href = "/newlisting/";
+            });
+            $("#showListings").click(function() {
+                window.location.href = "/listings/";
+            });
+            $("#odustani").click(function() {
+                window.location.href = "/";
+            });
+            $("#loginButton").click(function() {
+                window.location.href = "/";
+            });
+        });
+    </script>
+    <style>
+        /* Style the search button */
+        .search-btn {
+            border-radius: 0 0.5rem 0.5rem 0;
+            border-left: black solid 3px;
+            background-color: #0C312E;
+            height: 50px; /* Fixed height for the button */
+        }
+
+        .search-btn:hover, .search-btn:focus {
+            background-color: #0C312E;
+            border-left: black solid 3px;
+            color: inherit;
+        }
+
+        .search {
+            padding-left: 10px;
+            font-size: 1.5em;
+            height: 50px; /* Fixed height for the input */
+        }
+
+        .search::placeholder {
+            font-size: 1em;
+        }
+
+        .center-vertical {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .navbar-text {
+            width: 100%;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        /* Media query for responsive design */
+        @media (max-width: 992px) {
+            .search-bar-container {
+                flex-direction: column;
+            }
+            .search-bar-container form {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                text-align: center;
+            }
+            .search-bar-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .search-bar-container form {
+                width: 80%;
+            }
+            .navbar-text {
+                margin-top: 10px;
+            }
+        }
+
+        .search-bar-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar-container form {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid farm-light-colour sticky-top" style="margin-bottom: 30px">
+        <div class="row">
+            <div class="col-12 col-md-2 text-center text-md-left">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" style="width: 200px; height: auto;" class="logo-img">
+                </a>
+            </div>
+            <div class="col-12 col-md-8 d-flex align-items-center justify-content-center search-bar-container">
+                <form method="GET" action="{% url 'search_listings' %}" class="d-flex flex-grow-1 justify-content-center">
+                    <input class="farm-dark-colour search mr-sm-2" style="width: 50%; padding-bottom: 1%" type="search" name="q" placeholder="Sve na dohvat ruke...">
+                    <button class="btn search-btn farm-dark-colour btn-lg" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="col-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-end">
+                <div class="navbar-text text-center w-100">
+                    {% if request.session.logged_in %}
+                        <button id="logoutButton" type="button" class="btn btn-lg" style="background-color: #0C312E; color: white">
+                            IZLOGUJ SE
+                        </button>
+                    {% else %}
+                        <button id="loginButton" type="button" class="btn btn-lg" style="background-color: #0C312E; color: white">
+                            ULOGUJ SE
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <div class="container-fluid farm-light-colour sticky-bottom" style="position: fixed; bottom: 0">
+        <div class="row my-footer text-center">
+            <div class="col-3">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-home fa-3x"></i>
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="{% url 'chats' %}">
+                    <i class="far fa-comment fa-3x"></i>
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="{% url 'favorites' %}">
+                    <i class="far fa-star fa-3x"></i>
+                </a>
+            </div>
+            <div class="col-3">
+                <a href="{% url 'login' %}">
+                    <i class="far fa-user fa-3x"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

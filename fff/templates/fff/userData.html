@@ -1,0 +1,70 @@
+<!--Nikola Kovacevic 2021/0113-->
+{% extends 'main.html' %}
+
+{% block title %}
+Izmena podataka
+{% endblock title %}
+
+{% block content %}
+<div class="container d-flex flex-column align-items-center" style="margin-top: 5%">
+    <div>
+        <h1>Izmena podataka:</h1>
+    </div>
+    <div>
+        <form class="" method="post">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                <strong>Greška:</strong> Molimo vas da ispravite greške u formi.
+            </div>
+            {% endif %}
+            <table>
+                <tr>
+                    <td>Korisničko ime:</td>
+                    <td>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <span class="text-danger">{{ form.username.errors }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ime:</td>
+                    <td>{{ form.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Prezime:</td>
+                    <td>{{ form.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <span class="text-danger">{{ form.email.errors }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Telefon:</td>
+                    <td>{{ form.phone }}</td>
+                </tr>
+                <tr>
+                    <td>Grad:</td>
+                    <td>{{ form.city }}</td>
+                </tr>
+                <tr>
+                    <td>Država:</td>
+                    <td>{{ form.country }}</td>
+                </tr>
+            </table>
+            <div class="row d-flex justify-content-center">
+                <button class="btn search-btn farm-dark-colour btn-lg" style="border-radius: 5px; margin-top: 5%; width: 100%" type="submit"
+                        id="sacuvaj">
+                    Sačuvaj promene
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+<!--Maksim Mihailovic 2021/0092-->
+{% extends 'main.html' %}
+
+{% block title %}
+Chats
+{% endblock title %}
+
+{% block content %}
+<script>
+    function goToChat(chatId) {
+        window.location.href = "{% url 'chat' 0 %}".replace('0', chatId);
+    }
+
+    function go_to_chat(user2) {
+        $.ajax({
+            url: '/get_chat_admin/',
+            type: 'POST',
+            data: {
+                'user2': user2,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function (response) {
+                location.href = `/chat/${response.chat_id}/`;
+            }
+        });
+    }
+</script>
+<div class="container-fluid">
+    <div class="row login-wrapper justify-content-center">
+        <div class="col-4"></div>
+        <div class="col-4  d-flex justify-content-center">
+            <button type="button" class="btn farm-dark-colour customer-support btn-lg"  onclick="go_to_chat('1')">KORISNIČKA PODRŠKA</button>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    {% for chat in chats %}
+    <div class="row listings-row" onclick="goToChat('{{ chat.chat.chatid }}')" style="height: 120px">
+        <div class="col-3"></div>
+        <div class="col-1 chats-img">
+
+        </div>
+        <div class="col-5 d-flex align-items-center text-start chats-description">
+            <div>
+                <h3>{{ chat.other_user.username }}</h3>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    {% empty %}
+    <div class="row listings-row d-flex text-center">
+        <p>No chats available.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

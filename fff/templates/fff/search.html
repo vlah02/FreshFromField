@@ -1,0 +1,45 @@
+<!--Nikola Kovacevic 2021/0113-->
+{% extends 'main.html' %}
+{% load widget_tweaks %}
+{% load image_tags %}
+
+{% block title %}
+Rezultati pretrage
+{% endblock title %}
+
+{% block content %}
+<div class="container-fluid text-center" style="margin-top: 1%; margin-bottom: 120px">
+    <h3>Rezultati pretrage</h3>
+        {% for listing in listings %}
+        <div class="row listings-row" style="padding-top: 20px;">
+                <div class="col-3"></div>
+
+                <div class="col-1 listings-img" style="display: flex; align-items: center; justify-content: center">
+                    <a href="{% url 'listing' listing.pk %}">
+                        <img src="data:image/jpeg;base64,{{ listing.image|to_base64 }}" alt="{{ listing.listingname }}"
+                             style="width: 100%; height: auto;">
+                    </a>
+                </div>
+
+                <div class="col-3 d-flex align-items-center text-start listings-description">
+                    <div><a href="{% url 'listing' listing.pk %}">
+                        <h3>{{ listing.listingname }}</h3>
+                        <p>{{ listing.description|truncatechars:80 }}</p>
+                    </a></div>
+                </div>
+                <div class="col-2 d-flex align-items-center listings-price text-center">
+                    <a href="{% url 'listing' listing.pk %}">
+                        <h3>{{ listing.price }}{{ listing.unit }}</h3>
+                    </a>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="row listings-row" style="padding-top: 20px">
+            <div class="col-12">
+                <p>Nema rezultata</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

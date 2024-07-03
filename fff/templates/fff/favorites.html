@@ -1,0 +1,49 @@
+<!--Djordje Loncar 2021/0076-->
+{% extends 'main.html' %}
+{% load image_tags %}
+
+{% block title %}
+    Moji favoriti
+{% endblock title %}
+
+{% block content %}
+    {% for favorite_listing in favorite_listings %}
+        <input type="hidden" class="favorite-listing" value="{{ favorite_listing.listingid_id }}">
+    {% endfor %}
+    <div class="container-fluid text-center" style="margin-top: 2%">
+        <h1>Moji sačuvani oglasi:</h1>
+        {% for favorite_listing in favorite_listings %}
+            <div class="row listings-row" style="padding-top: 20px">
+                <div class="col-3"></div>
+
+                <div class="col-1 listings-img">
+                    <a href="{% url 'listing' favorite_listing.listingid.pk %}">
+                        <img src="data:image/jpeg;base64,{{ favorite_listing.listingid.image|to_base64 }}"
+                             alt="{{ favorite_listing.listingid.listingname }}"
+                             style="width: 100%; height: auto;">
+
+                    </a>
+                </div>
+
+                <div class="col-3 d-flex align-items-center text-start listings-description">
+                    <div><a href="{% url 'listing' favorite_listing.listingid.pk %}">
+                        <h3>{{ favorite_listing.listingid.listingname }}</h3>
+                        <p>{{ favorite_listing.listingid.description|truncatechars:100 }}</p>
+                    </a></div>
+                </div>
+                <div class="col-2 d-flex align-items-center listings-price">
+                    <a href="{% url 'listing' favorite_listing.listingid.pk %}">
+                        <h3>{{ favorite_listing.listingid.price }}{{ favorite_listing.listingid.unit }}</h3>
+                    </a>
+                </div>
+
+            </div>
+            {% empty %}
+            <div class="row listings-row" style="padding-top: 20px">
+            <div class="col-12">
+                <p>Nemate ništa sačuvano</p>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
